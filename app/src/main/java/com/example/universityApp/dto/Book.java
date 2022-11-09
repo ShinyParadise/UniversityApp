@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Book implements Serializable {
+    private transient Long id;
+
     @SerializedName("Author")
     @Expose
     private String author;
@@ -91,5 +93,13 @@ public class Book implements Serializable {
                 ", publicationDate='" + publicationDate + '\'' +
                 ", rating=" + rating +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
