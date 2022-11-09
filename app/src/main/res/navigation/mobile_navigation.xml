@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_book_list">
+
+    <fragment
+        android:id="@+id/navigation_book_list"
+        android:name="com.example.universityApp.ui.bookList.BookListFragment"
+        android:label="@string/title_book_list"
+        tools:layout="@layout/fragment_book_list" >
+        <action
+            android:id="@+id/action_navigation_book_list_to_navigation_selected_book"
+            app:destination="@id/navigation_selected_book" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_selected_book"
+        android:name="com.example.universityApp.ui.selectedBook.SelectedBookFragment"
+        android:label="@string/title_selected_book"
+        tools:layout="@layout/fragment_selected_book" >
+        <argument
+            android:name="book"
+            app:argType="com.example.universityApp.dto.Book"
+            android:defaultValue="@null" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_fav_books"
+        android:name="com.example.universityApp.ui.favBooks.FavBooksFragment"
+        android:label="@string/title_fav_books"
+        tools:layout="@layout/fragment_fav_books" />
+</navigation>
