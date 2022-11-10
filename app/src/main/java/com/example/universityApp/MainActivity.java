@@ -9,12 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.universityApp.ui.login.LoggedActivity;
+import com.example.universityApp.db.AppDatabase;
+import com.example.universityApp.db.dao.UserDAO;
+import com.example.universityApp.dto.User;
+import com.example.universityApp.repositories.UserRepositoryImpl;
+import com.example.universityApp.ui.logged.LoggedActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private LoginViewModel viewModel; 
+    
     private EditText etEmail;
     private EditText etPassword;
-
+    private Button btnLogin;
+    
     private String email, password;
 
     private String[] logins;
@@ -25,26 +32,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initiateViews();
+
         Resources res = getResources();
         logins = res.getStringArray(R.array.logins);
         passwords = res.getStringArray(R.array.passwords);
-
-        etEmail = findViewById(R.id.login);
-        etPassword = findViewById(R.id.password);
-        Button btnLogin = findViewById(R.id.btn_login);
+        
+        UserDAO userDAO = AppDatabase.getDatabase(getApplicationContext()).userDAO();
+        viewModel = new LoginViewModel(new UserRepositoryImpl(userDAO));
+        // только при первом запуске приложения
+        // insertUsers();
 
         btnLogin.setOnClickListener(v -> {
             email = etEmail.getText().toString();
             password = etPassword.getText().toString();
+            User userToValidate = new User(email, password);
 
-            int loginFound = findLogin(email);
-            if (loginFound != -1) {
-                if (isPasswordCorrect(password, loginFound)) {
-                    Intent launchLoggedScreen = new Intent(getApplicationContext(), LoggedActivity.class);
-                    startActivity(launchLoggedScreen);
-                } else {
-                    Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
-                }
+            if (viewModel.validateUser(userToValidate)) {
+                Intent launchLoggedScreen = new Intent(getApplicationContext(), LoggedActivity.class);
+                startActivity(launchLoggedScreen);
             } else {
                 Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             }
@@ -52,15 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private int findLogin(String loginToSearch) {
-        for (int i = 0; i< logins.length; i++) {
-            if (logins[i].equals(loginToSearch))
-                return i;
+    private void insertUsers() {
+        for (int i = 0; i < logins.length; i++) {
+            User newUser = new User(logins[i], passwords[i]);
+            viewModel.insertUser(newUser);
         }
-        return -1;
     }
 
-    private boolean isPasswordCorrect(String pass, int resID) {
-        return passwords[resID].equals(pass);
+    private void initiateViews() {
+        etEmail = findViewById(R.id.login);
+        etPassword = findViewById(R.id.password);
+        btnLogin = findViewById(R.id.btn_login);
     }
 }

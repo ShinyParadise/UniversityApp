@@ -31,7 +31,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User insert(User user) {
-        return null;
+        com.example.universityApp.db.models.User dbUser = toDbUser(user);
+
+        long insertedId = userDAO.insert(dbUser);
+
+        user.setId(insertedId);
+        return user;
     }
 
     @Override

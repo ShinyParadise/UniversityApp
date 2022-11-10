@@ -28,4 +28,23 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!login.equals(user.login)) return false;
+        return password.equals(user.password);
+    }
 }
