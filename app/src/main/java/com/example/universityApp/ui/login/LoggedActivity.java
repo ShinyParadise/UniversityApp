@@ -3,6 +3,9 @@ package com.example.universityApp;
 import android.os.Bundle;
 
 import com.example.universityApp.databinding.ActivityLoggedBinding;
+import com.example.universityApp.db.AppDatabase;
+import com.example.universityApp.db.dao.UserDAO;
+import com.example.universityApp.repositories.UserRepositoryImpl;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class LoggedActivity extends AppCompatActivity {
+    private LoggedViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,11 @@ public class LoggedActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         buildNavController(navView);
+
+        UserDAO userDAO = AppDatabase.getDatabase(getApplicationContext()).userDAO();
+
+        viewModel = new LoggedViewModel(new UserRepositoryImpl(userDAO));
+        viewModel.getUsers();
     }
 
     private void buildNavController(BottomNavigationView navView) {
