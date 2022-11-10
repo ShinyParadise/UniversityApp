@@ -1,7 +1,8 @@
-package com.example.universityApp;
+package com.example.universityApp.ui.login;
 
 import android.os.Bundle;
 
+import com.example.universityApp.R;
 import com.example.universityApp.databinding.ActivityLoggedBinding;
 import com.example.universityApp.db.AppDatabase;
 import com.example.universityApp.db.dao.UserDAO;

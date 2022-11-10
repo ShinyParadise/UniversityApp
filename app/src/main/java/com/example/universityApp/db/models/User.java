@@ -14,4 +14,9 @@ public class User {
 
     @ColumnInfo(name = "password")
     public String password;
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 }
