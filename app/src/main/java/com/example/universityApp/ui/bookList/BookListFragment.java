@@ -15,23 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.universityApp.R;
 import com.example.universityApp.databinding.FragmentBookListBinding;
+import com.example.universityApp.db.AppDatabase;
+import com.example.universityApp.db.dao.BookDAO;
+import com.example.universityApp.repositories.BookRepositoryImpl;
 
 public class BookListFragment extends Fragment {
     private FragmentBookListBinding binding;
     private BooksAdapter adapter;
+    private BookListViewModel viewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        BookListViewModel bookListViewModel =
-                new ViewModelProvider(this).get(BookListViewModel.class);
-
         binding = FragmentBookListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        bookListViewModel.fetchBooks();
-        initiateRecyclerView(root, bookListViewModel);
+        BookDAO bookDAO = AppDatabase.getDatabase(requireContext()).bookDAO();
+        viewModel = new BookListViewModel(new BookRepositoryImpl(bookDAO));
+
+        initiateRecyclerView(root, viewModel);
 //        final Handler handler = new Handler();
-//        final Runnable r = bookListViewModel::fetchBooks;
+//        final Runnable r = viewModel::fetchBooks;
 //
 //        handler.postDelayed(r, 1000);
 

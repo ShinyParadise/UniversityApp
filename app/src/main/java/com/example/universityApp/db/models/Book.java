@@ -34,13 +34,14 @@ public class Book {
     public boolean is_favorite = false;
 
     @ColumnInfo(name = "user_id", index = true)
-    public int user_id;
+    public long user_id;
 
-    public Book(String author, String name, String genre, String publicationDate, int rating) {
+    public Book(String author, String name, String genre, String publicationDate, int rating, long user_id) {
         this.author = author;
         this.name = name;
         this.genre = genre;
         this.publicationDate = publicationDate;
         this.rating = rating;
+        this.user_id = user_id;
     }
 }

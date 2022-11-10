@@ -10,6 +10,20 @@ import java.io.Serializable;
 public class Book implements Serializable {
     private transient long id;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
+
+    private long user_id;
+
     @SerializedName("Author")
     @Expose
     private String author;
@@ -30,9 +44,10 @@ public class Book implements Serializable {
     @Expose
     private int rating;
     
-    public Book(String name, String author) {
+    public Book(String name, String author, long user_id) {
         this.author = author;
         this.name = name;
+        this.user_id = user_id;
     }
 
     public Book(String name, String author, String genre, String publicationDate, int rating) {
