@@ -16,7 +16,7 @@ public interface UserDAO {
     List<User> getAll();
 
     @Insert
-    Long insert(User user);
+    long insert(User user);
 
     @Update
     void update(User user);

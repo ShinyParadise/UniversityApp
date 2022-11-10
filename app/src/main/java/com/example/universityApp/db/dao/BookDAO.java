@@ -16,7 +16,7 @@ public interface BookDAO {
     List<Book> getAll();
 
     @Insert
-    Long insert(Book book);
+    long insert(Book book);
 
     @Update
     void update(Book book);

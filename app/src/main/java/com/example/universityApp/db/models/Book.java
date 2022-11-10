@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey;
 })
 public class Book {
     @PrimaryKey(autoGenerate = true)
-    public int id = 0;
+    public long id = 0;
 
     @ColumnInfo(name = "author")
     public String author;

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "users")
 public class User {
     @PrimaryKey
-    public int id;
+    public long id;
 
     @ColumnInfo(name = "login")
     public String login;

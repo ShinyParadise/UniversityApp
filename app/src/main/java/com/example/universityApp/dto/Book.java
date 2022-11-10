@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Book implements Serializable {
-    private transient Long id;
+    private transient long id;
 
     @SerializedName("Author")
     @Expose
