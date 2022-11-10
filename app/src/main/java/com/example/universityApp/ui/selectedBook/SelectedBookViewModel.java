@@ -11,7 +11,6 @@ public class SelectedBookViewModel extends ViewModel {
 
     }
 
-
     public Book getSelectedBook() {
         return selectedBook;
     }
