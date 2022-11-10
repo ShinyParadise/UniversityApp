@@ -8,7 +8,7 @@ import com.example.universityApp.dto.Book;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BookRepositoryImpl implements BookRepository{
+public class BookRepositoryImpl implements BookRepository {
     private final BookDAO bookDAO;
 
     public BookRepositoryImpl(BookDAO bookDAO) {

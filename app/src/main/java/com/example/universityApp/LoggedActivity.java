@@ -22,6 +22,10 @@ public class LoggedActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+        buildNavController(navView);
+    }
+
+    private void buildNavController(BottomNavigationView navView) {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_book_list,
                 R.id.navigation_selected_book,
