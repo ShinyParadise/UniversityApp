@@ -21,9 +21,8 @@ public class FavBooksFragment extends Fragment {
                 new ViewModelProvider(this).get(FavBooksViewModel.class);
 
         binding = FragmentFavBooksBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-        return root;
+        return binding.getRoot();
     }
 
     @Override

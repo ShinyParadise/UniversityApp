@@ -3,7 +3,7 @@ package com.example.universityApp.ui.mainScreen;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.example.universityApp.UniversityApp;
+import com.example.universityApp.ui.UniversityApp;
 import com.example.universityApp.dto.User;
 import com.example.universityApp.repositories.userRepo.UserRepository;
 
@@ -26,15 +26,11 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void fetchUsers() {
-        executor.execute(() -> {
-            users = repository.getAll();
-        });
+        executor.execute(() -> users = repository.getAll());
     }
 
     public void insertUser(User user) {
-        executor.execute(() -> {
-            repository.insert(user);
-        });
+        executor.execute(() -> repository.insert(user));
     }
 
     public boolean validateUser(@NonNull User user) {

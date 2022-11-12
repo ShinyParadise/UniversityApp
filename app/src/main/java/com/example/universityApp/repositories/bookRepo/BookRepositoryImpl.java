@@ -46,15 +46,13 @@ public class BookRepositoryImpl implements BookRepository {
     @NonNull
     private List<Book> toBookItems(@NonNull List<com.example.universityApp.db.models.Book> dbBooks) {
         List<Book> books = new LinkedList<>();
-        dbBooks.forEach(book -> {
-            books.add(new Book(
-                    book.name,
-                    book.author,
-                    book.genre,
-                    book.publicationDate,
-                    book.rating)
-            );
-        });
+        dbBooks.forEach(book -> books.add(new Book(
+                book.name,
+                book.author,
+                book.genre,
+                book.publicationDate,
+                book.rating)
+        ));
 
         return books;
     }

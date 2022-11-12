@@ -24,8 +24,12 @@ public class SelectedBookFragment extends Fragment {
         binding = FragmentSelectedBookBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        Bundle bundle = getArguments();
+        Book book = null;
 
-        Book book = (Book) getArguments().getSerializable("Book");
+        if (bundle != null) {
+            book = (Book) bundle.getSerializable("Book");
+        }
 
         if (book != null) {
             selectedBookViewModel.setSelectedBook(book);

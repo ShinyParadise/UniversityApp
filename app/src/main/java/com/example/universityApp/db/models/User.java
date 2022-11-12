@@ -12,10 +12,10 @@ public class User {
     public long id = 0;
 
     @ColumnInfo(name = "login")
-    public String login;
+    public final String login;
 
     @ColumnInfo(name = "password")
-    public String password;
+    public final String password;
 
     public User(String login, String password) {
         this.login = login;

@@ -1,4 +1,4 @@
-package com.example.universityApp.ui.logged;
+package com.example.universityApp.ui.loggedScreen;
 
 import android.os.Bundle;
 

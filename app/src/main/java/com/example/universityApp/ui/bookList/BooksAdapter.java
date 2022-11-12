@@ -34,8 +34,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = books.get(position);
         holder.setBook(book);
-        holder.binding.bookListItemView.setOnClickListener(v -> {
-            clickListener.onClick(book);
+
+        // Normal click
+        holder.binding.bookListItemView.setOnClickListener(v -> clickListener.onClick(book));
+        // Long click
+        holder.binding.bookListItemView.setOnLongClickListener(v -> {
+            clickListener.onLongClick(book);
+            return false;
         });
     }
 

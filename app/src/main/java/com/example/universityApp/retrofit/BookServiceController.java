@@ -1,11 +1,11 @@
 package com.example.universityApp.retrofit;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
-import com.example.universityApp.UniversityApp;
 import com.example.universityApp.dto.Book;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -44,13 +44,14 @@ public class BookServiceController implements Callback<ArrayList<Book>> {
     public void onResponse(@NonNull Call<ArrayList<Book>> call, @NonNull Response<ArrayList<Book>> response) {
         if (response.isSuccessful()) {
             books = response.body();
+            
             // Было нужно только для 4 лабы
-            /* Log.i(TAG, "onResponse: Successful. Results are:\n");
+            Log.i(TAG, "onResponse: Successful. Results are:\n");
             if (books != null) {
                 books.forEach(book -> Log.i(TAG, book.toString()));
             } else {
                 Log.i(TAG, "No books");
-            }*/
+            }
         }
     }
 

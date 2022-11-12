@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import com.example.universityApp.R;
 import com.example.universityApp.databinding.FragmentBookListBinding;
 import com.example.universityApp.db.AppDatabase;
 import com.example.universityApp.db.dao.BookDAO;
+import com.example.universityApp.dto.Book;
 import com.example.universityApp.repositories.bookRepo.BookRepositoryImpl;
 
 public class BookListFragment extends Fragment {
@@ -58,16 +60,22 @@ public class BookListFragment extends Fragment {
         adapter = new BooksAdapter();
 
         Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            adapter.setBooks(viewModel.getBooks());
-        }, 100);
+        handler.postDelayed(() -> adapter.setBooks(viewModel.getBooks()), 100);
 
-        adapter.setClickListener(book -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("Book", book);
+        adapter.setClickListener(new ClickListener() {
+            @Override
+            public void onClick(Book book) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Book", book);
 
-            Navigation.findNavController(root)
-                    .navigate(R.id.action_navigation_book_list_to_navigation_selected_book, bundle);
+                Navigation.findNavController(root)
+                        .navigate(R.id.action_navigation_book_list_to_navigation_selected_book, bundle);
+            }
+
+            @Override
+            public void onLongClick(Book book) {
+                Toast.makeText(requireContext(), "Long press", Toast.LENGTH_SHORT).show();
+            }
         });
 
         RecyclerView booksRecyclerView = binding.recyclerViewBooks;

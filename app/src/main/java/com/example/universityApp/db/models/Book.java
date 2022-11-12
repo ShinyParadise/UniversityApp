@@ -10,19 +10,19 @@ public class Book {
     public long id = 0;
 
     @ColumnInfo(name = "author")
-    public String author;
+    public final String author;
 
     @ColumnInfo(name = "name")
-    public String name;
+    public final String name;
 
     @ColumnInfo(name = "genre")
-    public String genre;
+    public final String genre;
 
     @ColumnInfo(name = "publication_date")
-    public String publicationDate;
+    public final String publicationDate;
 
     @ColumnInfo(name = "rating")
-    public int rating;
+    public final int rating;
 
     public Book(String author, String name, String genre, String publicationDate, int rating) {
         this.author = author;

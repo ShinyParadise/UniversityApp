@@ -1,4 +1,4 @@
-package com.example.universityApp;
+package com.example.universityApp.ui;
 
 import android.app.Application;
 

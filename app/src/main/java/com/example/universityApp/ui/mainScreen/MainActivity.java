@@ -16,7 +16,7 @@ import com.example.universityApp.db.AppDatabase;
 import com.example.universityApp.db.dao.UserDAO;
 import com.example.universityApp.dto.User;
 import com.example.universityApp.repositories.userRepo.UserRepositoryImpl;
-import com.example.universityApp.ui.logged.LoggedActivity;
+import com.example.universityApp.ui.loggedScreen.LoggedActivity;
 
 public class MainActivity extends AppCompatActivity {
     private LoginViewModel viewModel;
