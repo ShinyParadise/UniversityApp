@@ -1,5 +1,8 @@
 package com.example.universityApp.ui.bookList;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -8,7 +11,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,20 +31,37 @@ public class BookListFragment extends Fragment {
         binding = FragmentBookListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        BookDAO bookDAO = AppDatabase.getDatabase(requireContext()).bookDAO();
-        viewModel = new BookListViewModel(new BookRepositoryImpl(bookDAO));
+        SharedPreferences prefs = requireActivity().getSharedPreferences(
+                "com.example.universityApp",
+                MODE_PRIVATE
+        );
 
-        initiateRecyclerView(root, viewModel);
-//        final Handler handler = new Handler();
-//        final Runnable r = viewModel::fetchBooks;
-//
-//        handler.postDelayed(r, 1000);
+        initViewModel();
+
+        if (prefs.getBoolean("wasLogged", true)) {
+            Handler handler = new Handler();
+            handler.postDelayed(() -> viewModel.fetchAndInsertBooksFromRepo(), 1000);
+            prefs.edit().putBoolean("wasLogged", false).apply();
+        }
+
+        initRecyclerView(root, viewModel);
 
         return root;
     }
 
-    private void initiateRecyclerView(View root, @NonNull BookListViewModel viewModel) {
+    private void initViewModel() {
+        BookDAO bookDAO = AppDatabase.getDatabase(requireContext()).bookDAO();
+        viewModel = new BookListViewModel(new BookRepositoryImpl(bookDAO));
+    }
+
+    private void initRecyclerView(View root, @NonNull BookListViewModel viewModel) {
         adapter = new BooksAdapter();
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            adapter.setBooks(viewModel.getBooks());
+        }, 100);
+
         adapter.setClickListener(book -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("Book", book);
@@ -50,13 +69,6 @@ public class BookListFragment extends Fragment {
             Navigation.findNavController(root)
                     .navigate(R.id.action_navigation_book_list_to_navigation_selected_book, bundle);
         });
-
-        final Handler handler = new Handler();
-        final Runnable r = () -> {
-            viewModel.fetchBooks();
-            adapter.setBooks(viewModel.getBooks());
-        };
-        handler.postDelayed(r, 1000);
 
         RecyclerView booksRecyclerView = binding.recyclerViewBooks;
         booksRecyclerView.setAdapter(adapter);

@@ -1,11 +1,11 @@
 package com.example.universityApp.retrofit;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
+import com.example.universityApp.UniversityApp;
 import com.example.universityApp.dto.Book;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -17,21 +17,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BookServiceController implements Callback<ArrayList<Book>> {
     private ArrayList<Book> books = new ArrayList<>();
 
+    private final BookService bookService;
+
     public static final String TAG = "BookServiceController";
     public static final String BASE_URL = "https://raw.githubusercontent.com/";
 
-    public ArrayList<Book> fetchBooks() {
-        fetch();
-        return books;
-    }
-
-    private void fetch() {
+    public BookServiceController() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        BookService bookService = retrofit.create(BookService.class);
+        bookService = retrofit.create(BookService.class);
+        fetch();
+    }
 
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    private void fetch() {
         Call<ArrayList<Book>> fetchedBooks = bookService.getBooks();
         fetchedBooks.enqueue(this);
     }
@@ -52,6 +56,7 @@ public class BookServiceController implements Callback<ArrayList<Book>> {
 
     @Override
     public void onFailure(@NonNull Call<ArrayList<Book>> call, @NonNull Throwable t) {
+        call.cancel();
         t.printStackTrace();
     }
 }

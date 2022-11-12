@@ -11,25 +11,30 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
 public class BookListViewModel extends ViewModel {
-    private ArrayList<Book> books;
+    private ArrayList<Book> books = new ArrayList<>();
     private final BookServiceController bookServiceController;
 
     private final BookRepository repository;
     private final Executor executor;
 
     public BookListViewModel(BookRepository repository) {
-        this.books = new ArrayList<>();
-        this.bookServiceController = new BookServiceController();
-        this.repository = repository;
         this.executor = UniversityApp.getAppExecutor();
+        this.repository = repository;
+        this.bookServiceController = new BookServiceController();
         fetchBooks();
+    }
+
+    private void fetchBooks() {
+        executor.execute(() -> {
+            books = new ArrayList<>(repository.getAll());
+        });
     }
 
     public ArrayList<Book> getBooks() {
         return books;
     }
 
-    public void fetchBooks() {
+    public void fetchAndInsertBooksFromRepo() {
 //        executor.execute(() -> {
 //            repository.insert(new Book("Гарри Поттер и Дары Смерти", "Джоан Роулинг"));
 //            repository.insert(new Book("Приключение Тома Сойера", "Марк Твен"));
@@ -39,7 +44,8 @@ public class BookListViewModel extends ViewModel {
 //            repository.insert(new Book("Зеленая миля", "Стивен Кинг");
 //        });
         executor.execute(() -> {
-            books = new ArrayList<>(repository.getAll());
+            books = bookServiceController.getBooks();
+            books.forEach(repository::insert);
         });
     }
 }

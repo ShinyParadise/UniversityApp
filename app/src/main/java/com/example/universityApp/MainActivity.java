@@ -74,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
         String password = etPassword.getText().toString();
         User userToValidate = new User(email, password);
 
-        if (viewModel.validateUser(userToValidate)) {
+        boolean isUserValid = viewModel.validateUser(userToValidate);
+
+        if (isUserValid) {
             Intent launchLoggedScreen = new Intent(getApplicationContext(), LoggedActivity.class);
             startActivity(launchLoggedScreen);
         } else {
