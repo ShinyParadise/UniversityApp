@@ -25,7 +25,7 @@ public class BookRepositoryImpl implements BookRepository {
     public Book insert(@NonNull Book book) {
         com.example.universityApp.db.models.Book dbBook = toDbBook(book);
 
-        Long insertedId = bookDAO.insert(dbBook);
+        long insertedId = bookDAO.insert(dbBook);
         book.setId(insertedId);
 
         return book;
