@@ -40,12 +40,13 @@ public class BookServiceController implements Callback<ArrayList<Book>> {
     public void onResponse(@NonNull Call<ArrayList<Book>> call, @NonNull Response<ArrayList<Book>> response) {
         if (response.isSuccessful()) {
             books = response.body();
-            Log.i(TAG, "onResponse: Successful. Results are:\n");
+            // Было нужно только для 4 лабы
+            /* Log.i(TAG, "onResponse: Successful. Results are:\n");
             if (books != null) {
                 books.forEach(book -> Log.i(TAG, book.toString()));
             } else {
                 Log.i(TAG, "No books");
-            }
+            }*/
         }
     }
 
