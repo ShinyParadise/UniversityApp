@@ -1,8 +1,9 @@
-package com.example.universityApp;
+package com.example.universityApp.ui.mainScreen;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.example.universityApp.UniversityApp;
 import com.example.universityApp.dto.User;
 import com.example.universityApp.repositories.userRepo.UserRepository;
 

@@ -1,4 +1,4 @@
-package com.example.universityApp;
+package com.example.universityApp.ui.mainScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.universityApp.R;
 import com.example.universityApp.db.AppDatabase;
 import com.example.universityApp.db.dao.UserDAO;
 import com.example.universityApp.dto.User;
