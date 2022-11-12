@@ -50,7 +50,13 @@ public class BookListFragment extends Fragment {
             Navigation.findNavController(root)
                     .navigate(R.id.action_navigation_book_list_to_navigation_selected_book, bundle);
         });
-        adapter.setBooks(viewModel.getBooks());
+
+        final Handler handler = new Handler();
+        final Runnable r = () -> {
+            viewModel.fetchBooks();
+            adapter.setBooks(viewModel.getBooks());
+        };
+        handler.postDelayed(r, 1000);
 
         RecyclerView booksRecyclerView = binding.recyclerViewBooks;
         booksRecyclerView.setAdapter(adapter);

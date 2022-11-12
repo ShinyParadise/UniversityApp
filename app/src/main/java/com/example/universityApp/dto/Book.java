@@ -10,20 +10,6 @@ import java.io.Serializable;
 public class Book implements Serializable {
     private transient long id;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
-    }
-
-    private long user_id;
-
     @SerializedName("Author")
     @Expose
     private String author;
@@ -44,10 +30,9 @@ public class Book implements Serializable {
     @Expose
     private int rating;
     
-    public Book(String name, String author, long user_id) {
+    public Book(String name, String author) {
         this.author = author;
         this.name = name;
-        this.user_id = user_id;
     }
 
     public Book(String name, String author, String genre, String publicationDate, int rating) {
@@ -58,28 +43,20 @@ public class Book implements Serializable {
         this.rating = rating;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getAuthor() {
         return author;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String  getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
     }
 
     public String getGenre() {
@@ -88,6 +65,22 @@ public class Book implements Serializable {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public int getRating() {
@@ -108,13 +101,5 @@ public class Book implements Serializable {
                 ", publicationDate='" + publicationDate + '\'' +
                 ", rating=" + rating +
                 '}';
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

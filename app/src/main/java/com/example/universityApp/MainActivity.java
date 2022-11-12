@@ -3,8 +3,10 @@ package com.example.universityApp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,13 +18,11 @@ import com.example.universityApp.repositories.UserRepositoryImpl;
 import com.example.universityApp.ui.logged.LoggedActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private LoginViewModel viewModel; 
-    
+    private LoginViewModel viewModel;
+
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
-    
-    private String email, password;
 
     private String[] logins;
     private String[] passwords;
@@ -31,31 +31,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences prefs = getSharedPreferences("com.example.universityApp", MODE_PRIVATE);
 
         initiateViews();
+        initResources();
+        initViewModel();
 
+        if (prefs.getBoolean("isFirstRun", true)) {
+            insertUsers();
+            prefs.edit().putBoolean("isFirstRun", false).apply();
+        }
+
+        btnLogin.setOnClickListener(this::onLoginClick);
+    }
+
+    private void initViewModel() {
+        UserDAO userDAO = AppDatabase.getDatabase(getApplicationContext()).userDAO();
+        viewModel = new LoginViewModel(new UserRepositoryImpl(userDAO));
+    }
+
+    private void initResources() {
         Resources res = getResources();
         logins = res.getStringArray(R.array.logins);
         passwords = res.getStringArray(R.array.passwords);
-        
-        UserDAO userDAO = AppDatabase.getDatabase(getApplicationContext()).userDAO();
-        viewModel = new LoginViewModel(new UserRepositoryImpl(userDAO));
-        // только при первом запуске приложения
-        // insertUsers();
-
-        btnLogin.setOnClickListener(v -> {
-            email = etEmail.getText().toString();
-            password = etPassword.getText().toString();
-            User userToValidate = new User(email, password);
-
-            if (viewModel.validateUser(userToValidate)) {
-                Intent launchLoggedScreen = new Intent(getApplicationContext(), LoggedActivity.class);
-                startActivity(launchLoggedScreen);
-            } else {
-                Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void insertUsers() {
@@ -69,5 +67,18 @@ public class MainActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.login);
         etPassword = findViewById(R.id.password);
         btnLogin = findViewById(R.id.btn_login);
+    }
+
+    private void onLoginClick(View v) {
+        String email = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        User userToValidate = new User(email, password);
+
+        if (viewModel.validateUser(userToValidate)) {
+            Intent launchLoggedScreen = new Intent(getApplicationContext(), LoggedActivity.class);
+            startActivity(launchLoggedScreen);
+        } else {
+            Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
+        }
     }
 }

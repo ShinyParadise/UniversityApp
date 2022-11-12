@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7e3b757cbb125f049e8316296286727a",
+    "identityHash": "5cd802d9d303049349538361aa8bc59d",
     "entities": [
       {
         "tableName": "users",
@@ -38,7 +38,7 @@
       },
       {
         "tableName": "books",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `author` TEXT, `name` TEXT, `genre` TEXT, `publication_date` TEXT, `rating` INTEGER NOT NULL, `is_favorite` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `author` TEXT, `name` TEXT, `genre` TEXT, `publication_date` TEXT, `rating` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -75,18 +75,6 @@
             "columnName": "rating",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "is_favorite",
-            "columnName": "is_favorite",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "user_id",
-            "columnName": "user_id",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -95,36 +83,14 @@
           ],
           "autoGenerate": true
         },
-        "indices": [
-          {
-            "name": "index_books_user_id",
-            "unique": false,
-            "columnNames": [
-              "user_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_books_user_id` ON `${TABLE_NAME}` (`user_id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "users",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "user_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7e3b757cbb125f049e8316296286727a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5cd802d9d303049349538361aa8bc59d')"
     ]
   }
 }

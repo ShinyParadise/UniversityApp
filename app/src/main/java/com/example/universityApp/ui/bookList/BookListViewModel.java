@@ -14,12 +14,12 @@ public class BookListViewModel extends ViewModel {
     private ArrayList<Book> books;
     private final BookServiceController bookServiceController;
 
-    private BookRepository repository;
-    private Executor executor;
+    private final BookRepository repository;
+    private final Executor executor;
 
     public BookListViewModel(BookRepository repository) {
-        books = new ArrayList<>();
-        bookServiceController = new BookServiceController();
+        this.books = new ArrayList<>();
+        this.bookServiceController = new BookServiceController();
         this.repository = repository;
         this.executor = UniversityApp.getAppExecutor();
         fetchBooks();
@@ -31,12 +31,12 @@ public class BookListViewModel extends ViewModel {
 
     public void fetchBooks() {
 //        executor.execute(() -> {
-//            repository.insert(new Book("Гарри Поттер и Дары Смерти", "Джоан Роулинг", 2));
-//            repository.insert(new Book("Приключение Тома Сойера", "Марк Твен", 2));
-//            repository.insert(new Book("Мастер и Маргарита", "Михаил Булгаков", 2));
+//            repository.insert(new Book("Гарри Поттер и Дары Смерти", "Джоан Роулинг"));
+//            repository.insert(new Book("Приключение Тома Сойера", "Марк Твен"));
+//            repository.insert(new Book("Мастер и Маргарита", "Михаил Булгаков"));
 //            repository.insert(new Book("Вишневый сад", "Антон Чехов", 2));
-//            repository.insert(new Book("Социальная фантастика", "Евгений Замятин", 2));
-//            repository.insert(new Book("Зеленая миля", "Стивен Кинг", 2));
+//            repository.insert(new Book("Социальная фантастика", "Евгений Замятин"));
+//            repository.insert(new Book("Зеленая миля", "Стивен Кинг");
 //        });
         executor.execute(() -> {
             books = new ArrayList<>(repository.getAll());

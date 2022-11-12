@@ -66,8 +66,7 @@ public class BookRepositoryImpl implements BookRepository {
                 book.getName(),
                 book.getGenre(),
                 book.getPublicationDate(),
-                book.getRating(),
-                book.getUser_id()
+                book.getRating()
         );
     }
 
