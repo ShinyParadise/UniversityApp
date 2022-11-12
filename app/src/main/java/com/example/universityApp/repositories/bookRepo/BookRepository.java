@@ -1,4 +1,4 @@
-package com.example.universityApp.repositories;
+package com.example.universityApp.repositories.bookRepo;
 
 import com.example.universityApp.dto.Book;
 

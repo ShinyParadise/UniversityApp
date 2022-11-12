@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.universityApp.dto.User;
-import com.example.universityApp.repositories.UserRepository;
+import com.example.universityApp.repositories.userRepo.UserRepository;
 
 import java.util.List;
 import java.util.concurrent.Executor;

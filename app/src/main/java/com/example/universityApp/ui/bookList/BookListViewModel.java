@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.universityApp.UniversityApp;
 import com.example.universityApp.dto.Book;
-import com.example.universityApp.repositories.BookRepository;
+import com.example.universityApp.repositories.bookRepo.BookRepository;
 import com.example.universityApp.retrofit.BookServiceController;
 
 import java.util.ArrayList;

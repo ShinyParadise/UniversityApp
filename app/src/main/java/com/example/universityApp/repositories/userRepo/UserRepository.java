@@ -1,4 +1,4 @@
-package com.example.universityApp.repositories;
+package com.example.universityApp.repositories.userRepo;
 
 import com.example.universityApp.dto.User;
 

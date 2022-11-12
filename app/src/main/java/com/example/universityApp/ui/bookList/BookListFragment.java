@@ -19,7 +19,7 @@ import com.example.universityApp.R;
 import com.example.universityApp.databinding.FragmentBookListBinding;
 import com.example.universityApp.db.AppDatabase;
 import com.example.universityApp.db.dao.BookDAO;
-import com.example.universityApp.repositories.BookRepositoryImpl;
+import com.example.universityApp.repositories.bookRepo.BookRepositoryImpl;
 
 public class BookListFragment extends Fragment {
     private FragmentBookListBinding binding;
