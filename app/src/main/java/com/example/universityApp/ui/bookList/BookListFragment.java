@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +27,8 @@ import com.example.universityApp.db.dao.FavBookDAO;
 import com.example.universityApp.dto.Book;
 import com.example.universityApp.repositories.bookRepo.BookRepositoryImpl;
 import com.example.universityApp.repositories.favBookRepo.FavBooksRepositoryImpl;
+
+import java.util.ArrayList;
 
 public class BookListFragment extends Fragment {
     private final static String TAG = "BookListFragment";
@@ -50,8 +53,7 @@ public class BookListFragment extends Fragment {
         initViewModel();
 
         if (prefs.getBoolean("wasLogged", true)) {
-            Handler handler = new Handler();
-            handler.postDelayed(() -> viewModel.fetchAndInsertBooksFromRepo(), 1000);
+            viewModel.fetchAndInsertBooksFromRepo();
             prefs.edit().putBoolean("wasLogged", false).apply();
         }
 
@@ -72,8 +74,10 @@ public class BookListFragment extends Fragment {
     private void initRecyclerView(View root, @NonNull BookListViewModel viewModel) {
         adapter = new BooksAdapter();
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> adapter.setBooks(viewModel.getBooks()), 100);
+        final Observer<ArrayList<Book>> booksObserver = books -> {
+            adapter.setBooks(books);
+        };
+        viewModel.books.observe(getViewLifecycleOwner(), booksObserver);
 
         adapter.setClickListener(new ClickListener() {
             @Override
