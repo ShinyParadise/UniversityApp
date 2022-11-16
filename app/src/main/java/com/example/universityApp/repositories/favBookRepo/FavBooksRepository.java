@@ -6,7 +6,7 @@ import com.example.universityApp.dto.FavBook;
 import java.util.List;
 
 public interface FavBooksRepository {
-    List<Book> getAll(long userID);
+    List<Book> getAllUserBooks(long userID);
     void insert(FavBook book);
     void update(FavBook book);
     void delete(FavBook book);

@@ -20,7 +20,7 @@ public class FavBooksRepositoryImpl implements FavBooksRepository {
     }
 
     @Override
-    public List<Book> getAll(long userID) {
+    public List<Book> getAllUserBooks(long userID) {
         List<com.example.universityApp.db.models.FavBook> favBookIDs = favBookDAO.getAllByUser(userID);
 
         List<Long> bookIDs = new LinkedList<>();

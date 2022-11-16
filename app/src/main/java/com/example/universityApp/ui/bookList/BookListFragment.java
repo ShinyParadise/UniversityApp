@@ -50,7 +50,8 @@ public class BookListFragment extends Fragment {
         initViewModel();
 
         if (prefs.getBoolean("wasLogged", true)) {
-            viewModel.fetchAndInsertBooksFromRepo();
+            Handler handler = new Handler();
+            handler.postDelayed(() -> viewModel.fetchAndInsertBooksFromRepo(), 1000);
             prefs.edit().putBoolean("wasLogged", false).apply();
         }
 
@@ -72,7 +73,7 @@ public class BookListFragment extends Fragment {
         adapter = new BooksAdapter();
 
         Handler handler = new Handler();
-        handler.postDelayed(() -> adapter.setBooks(viewModel.getBooks()), 1000);
+        handler.postDelayed(() -> adapter.setBooks(viewModel.getBooks()), 100);
 
         adapter.setClickListener(new ClickListener() {
             @Override
@@ -102,10 +103,11 @@ public class BookListFragment extends Fragment {
                 .setMessage(book.getName())
                 .setTitle("Добавить в избранное")
                 .setNegativeButton("Отмена", (dialog, which) -> {
-                    Log.i(TAG, "Action cancelled");
+                    Log.i(TAG, "Add favorite cancelled");
                 })
                 .setPositiveButton("В избранное", ((dialog, which) -> {
                     viewModel.addFavBook(book.getId(), userId);
+                    Log.i(TAG, book.toString());
                 }));
         builder.create().show();
     }

@@ -6,7 +6,7 @@
     <string name="title_activity_logged">LoggedActivity</string>
     <string name="title_book_list">Book list</string>
     <string name="title_selected_book">Selected book</string>
-    <string name="title_fav_books">Favourite books</string>
+    <string name="title_fav_books">Favorite Books</string>
     <string-array name="logins">
         <item>login1</item>
         <item>login2</item>
