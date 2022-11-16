@@ -15,6 +15,9 @@ public interface FavBookDAO {
     @Query("SELECT * FROM favorite_books")
     List<FavBook> getAll();
 
+    @Query("SELECT * FROM favorite_books WHERE user_id = :user_id")
+    List<FavBook> getAllByUser(long user_id);
+
     @Insert
     void insert(FavBook book);
 

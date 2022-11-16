@@ -43,6 +43,15 @@ public class Book implements Serializable {
         this.rating = rating;
     }
 
+    public Book(long id, String name, String author, String genre, String publicationDate, int rating) {
+        this.id = id;
+        this.author = author;
+        this.name = name;
+        this.genre = genre;
+        this.publicationDate = publicationDate;
+        this.rating = rating;
+    }
+
     public long getId() {
         return id;
     }

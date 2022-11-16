@@ -22,8 +22,10 @@ import com.example.universityApp.R;
 import com.example.universityApp.databinding.FragmentBookListBinding;
 import com.example.universityApp.db.AppDatabase;
 import com.example.universityApp.db.dao.BookDAO;
+import com.example.universityApp.db.dao.FavBookDAO;
 import com.example.universityApp.dto.Book;
 import com.example.universityApp.repositories.bookRepo.BookRepositoryImpl;
+import com.example.universityApp.repositories.favBookRepo.FavBooksRepositoryImpl;
 
 public class BookListFragment extends Fragment {
     private final static String TAG = "BookListFragment";
@@ -59,7 +61,11 @@ public class BookListFragment extends Fragment {
 
     private void initViewModel() {
         BookDAO bookDAO = AppDatabase.getDatabase(requireContext()).bookDAO();
-        viewModel = new BookListViewModel(new BookRepositoryImpl(bookDAO));
+        FavBookDAO favBookDAO = AppDatabase.getDatabase(requireContext()).favBookDAO();
+        viewModel = new BookListViewModel(
+                new BookRepositoryImpl(bookDAO),
+                new FavBooksRepositoryImpl(favBookDAO, bookDAO)
+        );
     }
 
     private void initRecyclerView(View root, @NonNull BookListViewModel viewModel) {
@@ -99,7 +105,7 @@ public class BookListFragment extends Fragment {
                     Log.i(TAG, "Action cancelled");
                 })
                 .setPositiveButton("В избранное", ((dialog, which) -> {
-                    //viewModel.addFavBook(book.getId(), userId);
+                    viewModel.addFavBook(book.getId(), userId);
                 }));
         builder.create().show();
     }

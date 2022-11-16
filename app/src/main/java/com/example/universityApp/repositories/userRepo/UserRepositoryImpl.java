@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
     @NonNull
     private List<User> toUsers(@NonNull List<com.example.universityApp.db.models.User> dbUsers) {
         List<User> users = new LinkedList<>();
-        dbUsers.forEach(user -> users.add(new User(user.login, user.password)));
+        dbUsers.forEach(user -> users.add(new User(user.id, user.login, user.password)));
 
         return users;
     }

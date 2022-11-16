@@ -15,6 +15,9 @@ public interface BookDAO {
     @Query("SELECT * FROM books")
     List<Book> getAll();
 
+    @Query("SELECT * FROM books WHERE id = :book_id")
+    Book getById(long book_id);
+
     @Insert
     long insert(Book book);
 
