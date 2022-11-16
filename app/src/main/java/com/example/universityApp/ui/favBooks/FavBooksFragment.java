@@ -4,7 +4,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +11,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.universityApp.R;
 import com.example.universityApp.databinding.FragmentFavBooksBinding;
 import com.example.universityApp.db.AppDatabase;
 import com.example.universityApp.db.dao.BookDAO;
 import com.example.universityApp.db.dao.FavBookDAO;
 import com.example.universityApp.dto.Book;
 import com.example.universityApp.repositories.favBookRepo.FavBooksRepositoryImpl;
-import com.example.universityApp.ui.bookList.BookListViewModel;
-import com.example.universityApp.ui.bookList.BooksAdapter;
-import com.example.universityApp.ui.bookList.ClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

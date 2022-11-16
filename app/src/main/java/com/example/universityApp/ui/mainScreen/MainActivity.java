@@ -1,7 +1,5 @@
 package com.example.universityApp.ui.mainScreen;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -10,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import com.example.universityApp.R;
 import com.example.universityApp.db.AppDatabase;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] logins;
     private String[] passwords;
 
+    private List<User> users;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         initiateViews();
         initResources();
         initViewModel();
+
+        final Observer<List<User>> userObserver = users -> {
+            this.users = users;
+        };
+        viewModel.users.observe(this, userObserver);
 
         if (prefs.getBoolean("isFirstRun", true)) {
             insertUsers();
@@ -78,11 +86,10 @@ public class MainActivity extends AppCompatActivity {
         String password = etPassword.getText().toString();
         User userToValidate = new User(email, password);
 
-        boolean isUserValid = viewModel.validateUser(userToValidate);
+        boolean isUserValid = users.contains(userToValidate);
         long userId = -1;
 
         if (isUserValid) {
-            List<User> users = viewModel.getUsers();
             for (User user : users) {
                 if (user.getLogin().equals(userToValidate.getLogin())) {
                     userId = user.getId();

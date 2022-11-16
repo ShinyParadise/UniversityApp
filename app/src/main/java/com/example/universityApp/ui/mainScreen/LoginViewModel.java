@@ -1,17 +1,19 @@
 package com.example.universityApp.ui.mainScreen;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.universityApp.ui.UniversityApp;
 import com.example.universityApp.dto.User;
 import com.example.universityApp.repositories.userRepo.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 public class LoginViewModel extends ViewModel {
-    private List<User> users;
+    public MutableLiveData<List<User>> users = new MutableLiveData<>(new ArrayList<>());
     private final UserRepository repository;
     private final Executor executor;
 
@@ -22,18 +24,17 @@ public class LoginViewModel extends ViewModel {
     }
 
     public List<User> getUsers() {
-        return users;
+        return users.getValue();
     }
 
     public void fetchUsers() {
-        executor.execute(() -> users = repository.getAll());
+        executor.execute(() -> users.postValue(repository.getAll()));
     }
 
     public void insertUser(User user) {
-        executor.execute(() -> repository.insert(user));
-    }
-
-    public boolean validateUser(@NonNull User user) {
-        return users.contains(user);
+        executor.execute(() -> {
+            repository.insert(user);
+            users.postValue(repository.getAll());
+        });
     }
 }
