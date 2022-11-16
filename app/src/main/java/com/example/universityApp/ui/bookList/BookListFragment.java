@@ -2,15 +2,17 @@ package com.example.universityApp.ui.bookList;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +26,9 @@ import com.example.universityApp.dto.Book;
 import com.example.universityApp.repositories.bookRepo.BookRepositoryImpl;
 
 public class BookListFragment extends Fragment {
+    private final static String TAG = "BookListFragment";
+    private long userId;
+
     private FragmentBookListBinding binding;
     private BooksAdapter adapter;
     private BookListViewModel viewModel;
@@ -38,11 +43,12 @@ public class BookListFragment extends Fragment {
                 MODE_PRIVATE
         );
 
+        userId = prefs.getLong("userId", -1);
+
         initViewModel();
 
         if (prefs.getBoolean("wasLogged", true)) {
-            Handler handler = new Handler();
-            handler.postDelayed(() -> viewModel.fetchAndInsertBooksFromRepo(), 1000);
+            viewModel.fetchAndInsertBooksFromRepo();
             prefs.edit().putBoolean("wasLogged", false).apply();
         }
 
@@ -60,7 +66,7 @@ public class BookListFragment extends Fragment {
         adapter = new BooksAdapter();
 
         Handler handler = new Handler();
-        handler.postDelayed(() -> adapter.setBooks(viewModel.getBooks()), 100);
+        handler.postDelayed(() -> adapter.setBooks(viewModel.getBooks()), 1000);
 
         adapter.setClickListener(new ClickListener() {
             @Override
@@ -74,13 +80,28 @@ public class BookListFragment extends Fragment {
 
             @Override
             public void onLongClick(Book book) {
-                Toast.makeText(requireContext(), "Long press", Toast.LENGTH_SHORT).show();
+                showDialog(book);
             }
         });
 
         RecyclerView booksRecyclerView = binding.recyclerViewBooks;
         booksRecyclerView.setAdapter(adapter);
         booksRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+    }
+
+    private void showDialog(@NonNull Book book) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setCancelable(true)
+                .setIcon(R.drawable.logo_library)
+                .setMessage(book.getName())
+                .setTitle("Добавить в избранное")
+                .setNegativeButton("Отмена", (dialog, which) -> {
+                    Log.i(TAG, "Action cancelled");
+                })
+                .setPositiveButton("В избранное", ((dialog, which) -> {
+                    //viewModel.addFavBook(book.getId(), userId);
+                }));
+        builder.create().show();
     }
 
     @Override

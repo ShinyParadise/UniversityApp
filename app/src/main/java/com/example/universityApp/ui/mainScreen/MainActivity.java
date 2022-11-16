@@ -18,8 +18,11 @@ import com.example.universityApp.dto.User;
 import com.example.universityApp.repositories.userRepo.UserRepositoryImpl;
 import com.example.universityApp.ui.loggedScreen.LoggedActivity;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private LoginViewModel viewModel;
+    private SharedPreferences prefs;
 
     private EditText etEmail;
     private EditText etPassword;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences prefs = getSharedPreferences("com.example.universityApp", MODE_PRIVATE);
+        prefs = getSharedPreferences("com.example.universityApp", MODE_PRIVATE);
 
         initiateViews();
         initResources();
@@ -76,8 +79,17 @@ public class MainActivity extends AppCompatActivity {
         User userToValidate = new User(email, password);
 
         boolean isUserValid = viewModel.validateUser(userToValidate);
+        long userId = -1;
 
         if (isUserValid) {
+            List<User> users = viewModel.getUsers();
+            for (User user : users) {
+                if (user.getLogin().equals(userToValidate.getLogin())) {
+                    userId = user.getId();
+                }
+            }
+            prefs.edit().putLong("userId", userId).apply();
+
             Intent launchLoggedScreen = new Intent(getApplicationContext(), LoggedActivity.class);
             startActivity(launchLoggedScreen);
         } else {
