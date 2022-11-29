@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/box_inset_layout_padding"
-    tools:context=".MainActivity"
+    tools:context=".ui.MainActivity"
     tools:deviceIds="wear">
 
     <FrameLayout
@@ -16,7 +16,9 @@
 
 
         <androidx.wear.widget.WearableRecyclerView
+            android:id="@+id/book_list"
             android:layout_width="match_parent"
+            tools:listitem="@layout/list_item"
             android:layout_height="match_parent" />
 
     </FrameLayout>
