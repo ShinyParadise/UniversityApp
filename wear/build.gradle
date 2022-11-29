@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.example.universityApp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.universityApp"
         minSdk 28
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -20,9 +20,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-    buildFeatures {
-        viewBinding true
     }
 }
 
