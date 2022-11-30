@@ -2,19 +2,32 @@ package com.example.universityApp.dto;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Book implements Serializable {
     private transient long id;
 
+    @SerializedName("Author")
+    @Expose
     private String author;
 
+    @SerializedName("Genre")
+    @Expose
     private String genre;
 
+    @SerializedName("Name")
+    @Expose
     private String name;
 
+    @SerializedName("PublicationDate")
+    @Expose
     private String publicationDate;
 
+    @SerializedName("rating")
+    @Expose
     private int rating;
 
     public Book(String name, String author) {

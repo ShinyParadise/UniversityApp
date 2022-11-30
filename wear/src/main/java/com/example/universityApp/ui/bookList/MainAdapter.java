@@ -1,4 +1,4 @@
-package com.example.universityApp.ui;
+package com.example.universityApp.ui.bookList;
 
 import android.view.LayoutInflater;
 import android.view.View;
